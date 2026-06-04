@@ -1,33 +1,31 @@
 pipeline {
     agent any
 
-    environment {
-        BUCKET = "calculator-devops-app"
+    options {
+        skipDefaultCheckout(true)
     }
 
     stages {
 
-        stage('Clone Repo') {
+        stage('Clean') {
             steps {
-                git 'https://github.com/Ephraimimmanuel/calculator-s3-app.git'
+                deleteDir()
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Ephraimimmanuel/calculator-s3-app.git'
             }
         }
 
         stage('Deploy to S3') {
             steps {
                 sh '''
-                aws s3 sync . s3://$BUCKET --delete
+                aws s3 sync . s3://calculator-devops-app --delete
                 '''
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Deployment SUCCESS 🚀"
-        }
-        failure {
-            echo "Deployment FAILED ❌"
         }
     }
 }
