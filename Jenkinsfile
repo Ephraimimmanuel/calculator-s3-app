@@ -12,6 +12,11 @@ pipeline {
                 deleteDir()
             }
         }
+        stage('Test AWS Login') {
+            steps {
+                bat 'aws sts get-caller-identity'
+    }
+}
 
         stage('Checkout') {
             steps {
