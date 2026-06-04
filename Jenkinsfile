@@ -19,6 +19,11 @@ pipeline {
                     url: 'https://github.com/Ephraimimmanuel/calculator-s3-app.git'
             }
         }
+        stage('Check AWS') {
+            steps {
+                bat 'aws --version'
+    }
+}
 
         stage('Deploy to S3') {
             steps {
@@ -27,5 +32,6 @@ pipeline {
                 '''
             }
         }
+
     }
 }
