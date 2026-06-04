@@ -22,7 +22,7 @@ pipeline {
 
         stage('Deploy to S3') {
             steps {
-                sh '''
+                bat '''
                 aws s3 sync . s3://calculator-devops-app --delete
                 '''
             }
